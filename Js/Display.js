@@ -109,11 +109,11 @@ function LlenarLista(numero1,operacion,numero2,resultado){
 }
 //Funcion donde Paso mi Objeto lista al LocalStorage.
 function AddLocalStorage(oLista) {
-    localStorage.setItem('Historial',JSON.stringify(oLista));
+    localStorage.setItem('Historial',JSON.stringify(oLista));//Guardo los datos en mi LocalStorage.
 }
 //Funcion con la que leo los items que tengo en el localStorage.
 function getHistorial() {
-    var oLocalStorage = localStorage.getItem('Historial');
+    var oLocalStorage = localStorage.getItem('Historial');//Obtengo los datos en mi LocalStorage.
     if (oLocalStorage == null) {
         miHistorial = [];
     }

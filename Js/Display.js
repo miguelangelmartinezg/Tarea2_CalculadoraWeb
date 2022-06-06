@@ -19,30 +19,30 @@ class Display {
 
     }
 
+    //Metodo que se ejecuta al Clickear (<--)
     Borrar() {
         this.cvalorActual = this.cvalorActual.toString().slice(0,-1);
         this.MostrarValores();
 
     }
+    //Metodo que se ejecuta al clickear el boton Borrar (C)
     BorrarTodo(){
         this.cvalorActual = '';
         this.cvalorAnterior = '';
         this.tipoOperacion = undefined;
         this.MostrarValores();
     }
+    //Metodo que se ejecuta segun la operacion del boton Clickeado
     Operacion(tipo){
         this.tipoOperacion !== 'igual' && this.Calcular();
         this.tipoOperacion = tipo;
         this.cvalorAnterior = this.cvalorActual || this.cvalorAnterior;
-
-       
-
-        //console.log(`${this.cvalorAnterior} ${this.signos[this.tipoOperacion] || ''}`);
         this.cvalorActual = '';
         this.MostrarValores();
 
     }
 
+    //Metodo que agrega el numero correspondiente al bonton que fue Clickeado
     AgregarNumero(cNumero) {
         if (cNumero === '.' && this.cvalorActual.includes('.')) return
         this.cvalorActual = this.cvalorActual.toString() + cNumero.toString();
@@ -50,15 +50,15 @@ class Display {
         this.MostrarValores();
     }
 
+    //Metodo que Muestra los Valores en mi Display.
     MostrarValores(){
         this.displayValorActual.textContent = this.cvalorActual;
         this.displayValorAnterior.textContent = `${this.cvalorAnterior} ${this.signos[this.tipoOperacion] || ''}`;
-        
-        //console.log( `${this.cvalorAnterior} ${this.signos[this.tipoOperacion] || ''} ${this.cvalorActual}`);
-      // console.log(this.displayValorAnterior.textContent);
+      
 
     }
 
+    //Metodo que hace los calculos segun el tipo de Operacion
     Calcular(){
         const nVAnterior = parseFloat(this.cvalorAnterior);
         const nVActual = parseFloat(this.cvalorActual);
@@ -73,15 +73,12 @@ class Display {
             Resultado: `${'='} ${this.cvalorActual}`
 
         };
+        //Le paso a la lista cada calculo que se haga, para luego pasarlo al LocalStorage.
         LlenarLista(nVAnterior,this.signos[this.tipoOperacion],nVActual,`${'='} ${this.cvalorActual}`);
-       //this.History = Historial();
-        //console.log(getHistorial());
-        //console.log(oHistorial);
-        //miHistorial.push(oHistorial)
        
-        
     }
 
+    //Metodo que se Ejecuta cada vez que el usuario preciona el Boton Hist.
     Historial(){
         let oHistorial = getHistorial();
         for (let index = 0; index < oHistorial.length; index++) {
@@ -94,10 +91,9 @@ class Display {
         
     }
 
-  
-
 }
 var miHistorial = [];
+//Creo y lleno un Array  para pasrlo como parametro al metodo que donde hago el setItem del localStorage.
 function LlenarLista(numero1,operacion,numero2,resultado){
     var oHistorial = {
         Num1 : numero1,
@@ -107,12 +103,15 @@ function LlenarLista(numero1,operacion,numero2,resultado){
 
     };
     miHistorial.push(oHistorial);
+    //Le paso como parametro la lista recien creada
     AddLocalStorage(miHistorial);
-    //console.log(oHistorial);
+    
 }
+//Funcion donde Paso mi Objeto lista al LocalStorage.
 function AddLocalStorage(oLista) {
     localStorage.setItem('Historial',JSON.stringify(oLista));
 }
+//Funcion con la que leo los items que tengo en el localStorage.
 function getHistorial() {
     var oLocalStorage = localStorage.getItem('Historial');
     if (oLocalStorage == null) {
